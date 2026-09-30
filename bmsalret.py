@@ -7,6 +7,7 @@ from zoneinfo import ZoneInfo
 
 import requests
 import psycopg2
+import cloudscraper
 from dotenv import load_dotenv
 
 # Load variables from .env if present
@@ -293,7 +294,7 @@ def register_commands():
                 },
                 timeout=15,
             )
-            print("Registered admin commands for chat", ADMIN_CHAT_ID)
+            print("Registered admin commands for chat")
         except Exception as e:
             print("Failed to register admin commands:", e)
 
@@ -575,7 +576,8 @@ def is_open(url):
     if not url:
         return False, "no URL set"
     try:
-        r = requests.get(url, headers=HEADERS, timeout=20, allow_redirects=True)
+        scraper = cloudscraper.create_scraper()
+        r = scraper.get(url, headers=HEADERS, timeout=20, allow_redirects=True)
         if r.status_code in (403, 429):
             return False, f"blocked ({r.status_code})"
         if r.status_code != 200:
