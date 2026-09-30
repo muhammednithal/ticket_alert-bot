@@ -1,4 +1,4 @@
-#  Ticket Alert Bot 🎟️
+# Ticket Alert Bot 🎟️
 
 An automated Telegram bot that monitors movie ticket availability for targeted show links, alerting subscribed users instantly as soon as ticket bookings open. Supports monitoring **multiple URLs** simultaneously.
 
@@ -32,12 +32,12 @@ Create a `.env` file in the root directory (or copy from `.env.example`):
 cp .env.example .env
 ```
 
-| Variable | Description | Default |
-| :--- | :--- | :--- |
-| `TELEGRAM_BOT_TOKEN` | **Required.** Your Telegram bot API token from BotFather | `""` |
-| `ADMIN_CHAT_ID` | **Required.** Telegram Chat ID of the admin who can run admin commands | `""` |
-| `DATABASE_URL` | **Required.** PostgreSQL connection string | `""` |
-| `CHECK_INTERVAL_SECONDS` | Default time in seconds between check cycles | `60` |
+| Variable                 | Description                                                            | Default |
+| :----------------------- | :--------------------------------------------------------------------- | :------ |
+| `TELEGRAM_BOT_TOKEN`     | **Required.** Your Telegram bot API token from BotFather               | `""`    |
+| `ADMIN_CHAT_ID`          | **Required.** Telegram Chat ID of the admin who can run admin commands | `""`    |
+| `DATABASE_URL`           | **Required.** PostgreSQL connection string                             | `""`    |
+| `CHECK_INTERVAL_SECONDS` | Default time in seconds between check cycles                           | `60`    |
 
 ---
 
@@ -45,11 +45,11 @@ cp .env.example .env
 
 The bot auto-creates three tables on first run:
 
-| Table | Purpose |
-| :--- | :--- |
-| `subscribers` | Telegram chat IDs of subscribed users |
-| `watch_urls` | URLs being monitored — each with an ID, optional label, and alerted status |
-| `settings` | Key-value store for dynamic settings (`check_interval`, `paused`) |
+| Table         | Purpose                                                                    |
+| :------------ | :------------------------------------------------------------------------- |
+| `subscribers` | Telegram chat IDs of subscribed users                                      |
+| `watch_urls`  | URLs being monitored — each with an ID, optional label, and alerted status |
+| `settings`    | Key-value store for dynamic settings (`check_interval`, `paused`)          |
 
 No manual table creation needed — just provide a valid `DATABASE_URL`.
 
@@ -59,42 +59,45 @@ No manual table creation needed — just provide a valid `DATABASE_URL`.
 
 ### Subscriber Commands (everyone)
 
-| Command | Description |
-| :--- | :--- |
-| `/start` | Subscribe to booking alerts |
-| `/stop` | Unsubscribe from alerts |
+| Command   | Description                                                                  |
+| :-------- | :--------------------------------------------------------------------------- |
+| `/start`  | Subscribe to booking alerts                                                  |
+| `/stop`   | Unsubscribe from alerts                                                      |
 | `/status` | View bot status — active/total URLs, subscriber count, interval, pause state |
-| `/urls` | Show all currently watched URLs |
-| `/help` | Show all available commands (admins see admin commands too) |
+| `/urls`   | Show all currently watched URLs                                              |
+| `/help`   | Show all available commands (admins see admin commands too)                  |
 
 ### Admin Commands (ADMIN_CHAT_ID only)
 
-| Command | Description |
-| :--- | :--- |
-| `/addurl <url>` | Add a URL to the watch list |
-| `/addurl <label> <url>` | Add a URL with a label (e.g., `AAA-Oct3`) |
-| `/removeurl <id>` | Remove a URL by its `#id` |
-| `/listurls` | List all URLs with their alert status |
-| `/broadcast <message>` | Send a custom message to all subscribers |
-| `/subs` | View the subscriber count and list of chat IDs |
-| `/pause` | Pause the monitoring loop |
-| `/resume` | Resume the monitoring loop |
-| `/setinterval <seconds>` | Change the check interval dynamically (minimum 10s) |
-| `/check` | Run a one-off check on all active URLs and report results |
-| `/clearalerts` | Reset all alerted URLs so they get rechecked |
-| `/admin` | Show admin-only command help |
+| Command                  | Description                                               |
+| :----------------------- | :-------------------------------------------------------- |
+| `/addurl <url>`          | Add a URL to the watch list                               |
+| `/addurl <label> <url>`  | Add a URL with a label (e.g., `AAA-Oct3`)                 |
+| `/removeurl <id>`        | Remove a URL by its `#id`                                 |
+| `/listurls`              | List all URLs with their alert status                     |
+| `/broadcast <message>`   | Send a custom message to all subscribers                  |
+| `/subs`                  | View the subscriber count and list of chat IDs            |
+| `/pause`                 | Pause the monitoring loop                                 |
+| `/resume`                | Resume the monitoring loop                                |
+| `/setinterval <seconds>` | Change the check interval dynamically (minimum 10s)       |
+| `/check`                 | Run a one-off check on all active URLs and report results |
+| `/clearalerts`           | Reset all alerted URLs so they get rechecked              |
+| `/admin`                 | Show admin-only command help                              |
 
 ---
 
 ## 🛠️ Setup & Running
 
 ### 1. Install Dependencies
+
 ```bash
 uv sync
 ```
 
 ### 2. Configure Environment
+
 Update your `.env` file:
+
 ```env
 TELEGRAM_BOT_TOKEN=your_bot_token_here
 ADMIN_CHAT_ID=123456789
@@ -102,18 +105,23 @@ DATABASE_URL=postgresql://user:password@host:5432/dbname
 ```
 
 ### 3. Run the Bot
+
 ```bash
 uv run bmsalret.py
 ```
 
 ### 4. Add URLs to Watch
+
 In Telegram, send:
+
 ```
 /addurl https://TEST.com/cinemas/hyderabad/allu-cinemas-kokapet/buytickets/ALUC/20261003
 ```
+
 Or with a label:
+
 ```
-/addurl AAA-Oct3 https://in.bookmyshow.com/.../ALUC/20261003
+/addurl AAA-Oct3 https://test.com/.../ALUC/20261003
 ```
 
 ---

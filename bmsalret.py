@@ -429,7 +429,7 @@ def listen_for_commands():
                             "⚠️ Usage:\n"
                             "/addurl <url>\n"
                             "/addurl <label> <url>\n\n"
-                            "Example:\n/addurl AAA-Oct3 https://in.bookmyshow.com/.../20261003",
+                            "Example:\n/addurl AAA-Oct3 https://testw.com/.../20261003",
                         )
                         continue
 
